@@ -1,12 +1,11 @@
 # ECIR-PSS-ReproducibilityResources
 
 This repository contais the code in the links the resources need to run the code used in this paper. The repository is
-divided into the following parts:
+divided 3 main parts, corresponding to the three research questions in the paper.
 
-1. Implementations of the Image, Text and combined models from Wiedemann et al.
-2. Implementation of the EfficientNet model from Braz
-3. Implementation of the BERT model from Guha.
-4. Link to the data needed to reproduce the experiments.
+1. EXPERIMENT_1
+2. EXPERIMENT_2
+3. EXPERIMENT_3
 
 The repository is structured in the following way:
 
