@@ -1,5 +1,12 @@
 # ECIR-PSS-ReproducibilityResources
 
+## Installation
+We recommend using Anaconda to install all the dependencies required for running the code in this package. The easiest way of doing this is py using the requirements.txt / requirements.yaml files provided in the repository. Assuming you hanve Anaconda installed, you can a fresh environment with the required packages using the following command.
+
+``
+conda create -n ENV_NAME 
+``
+
 This repository contais the code in the links the resources need to run the code used in this paper. The repository is
 divided 3 main parts, corresponding to the three research questions in the paper.
 
@@ -16,3 +23,6 @@ The dataset is made available through 3 seperate Zenodo links because of the siz
 ## Trained Models
  - 
  - The models and data can be downloaded manually, but can also be downloaded using the scripts in 'dataset' and 'trained_models'
+
+## Experiment 1 Instructions
+The scripts present in the EXPERIMENT_1 folder are all structured in a similar manner, and can be run using the same command line arguments. Below are some small examples on how to run these models from EXPERIMENT_1
