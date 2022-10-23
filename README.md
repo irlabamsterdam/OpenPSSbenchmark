@@ -18,8 +18,7 @@ divided 3 main parts, corresponding to the three research questions in the paper
 Because of the size of the dataset and the number of trained models, these are made available through separate links.
 
 ## Dataset
-The dataset is made available through 3 seperate Zenodo links because of the size of the dataset and the need to keep it anonymous for the double blind review. 
-
+The datasets, models and output vectors are made available through Zenodo. We have provided the images as 224 by 224, as this is the image size used by the models in this paper, and it significantly reduces the size of the datasets, making at more suitable for reproducibility.
 ## Trained Models
  - 
  - The models and data can be downloaded manually, but can also be downloaded using the scripts in 'dataset' and 'trained_models'
