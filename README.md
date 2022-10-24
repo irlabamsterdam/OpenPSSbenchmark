@@ -23,6 +23,9 @@ the 'download_resources.sh' script.
 ## Experiment 1 Instructions
 The scripts present in the EXPERIMENT_1 folder are all structured in a similar manner, and can be run using the same command line arguments. Below are some small examples on how to run these models from EXPERIMENT_1. By default, all of the scripts in this research use the pretrained models on the C1 and C2 datasets, however, by using the ``from_scratch`` parameter, the models can be re-trained. However be aware that this can take a very long time, it took as about 2 days on a GPU to train the WIED-IMG model on the C1 dataset.
 
+To automatically get all the scores, run the 'experimen1.sh' script, otherwise run the different models seperately, using the following structure:
+`` MODEL_FILE.py --train_dataset C1 --test_dataset C1``. This will print the scores for the model given by the MODEL_FILE name on the C1 dataset and save the output vectors. Running experiment1.sh will run the models with preloaded predictions.
+
 
 Although all of the models will produce the ``predictions.json`` file required to evaluate the model, this can take a significant amount of time for some of the models, especially the GUHA-TXT and WIED-IMG models. For this reason, we have also provided the predictions of the output models in the ``model_outputs`` folder. You can also follow the scripts from EXPERIMENT_1 and run the predictions manually.
 
