@@ -62,22 +62,22 @@ def load_data_for_experiment_3(train_dataset: str, test_dataset: str,
     # Here we have to get the train and test gold standard
     # as well as the train and test vectors, either the full vectors
     # or the output probabilities, depending on the fusion type.
-    train_gold_standard = read_json('../gold_standard/%s_train/gold_standard.json' % train_dataset)
-    test_gold_standard =read_json('../gold_standard/%s_test/gold_standard.json' % test_dataset)
+    train_gold_standard = read_json('../resources/gold_standard/%s_train/gold_standard.json' % train_dataset)
+    test_gold_standard =read_json('../resources/gold_standard/%s_test/gold_standard.json' % test_dataset)
 
     if fusion_type == 'LATE':
-        train_data_text = read_json('../model_outputs/WIED-TXT_%s/train/raw_scores.json' % train_dataset)
-        train_data_image = read_json('../model_outputs/WIED-IMG_%s/train/raw_scores.json' % train_dataset)
+        train_data_text = read_json('../resources/model_outputs/WIED-TXT_%s/train/raw_scores.json' % train_dataset)
+        train_data_image = read_json('../resources/model_outputs/WIED-IMG_%s/train/raw_scores.json' % train_dataset)
 
-        test_data_text = read_json('../model_outputs/WIED-TXT_%s/%s_%s/raw_scores.json' % (train_dataset, train_dataset, test_dataset))
-        test_data_image = read_json('../model_outputs/WIED-IMG_%s/%s_%s/raw_scores.json' % (train_dataset, train_dataset, test_dataset))
+        test_data_text = read_json('../resources/model_outputs/WIED-TXT_%s/%s_%s/raw_scores.json' % (train_dataset, train_dataset, test_dataset))
+        test_data_image = read_json('../resources/model_outputs/WIED-IMG_%s/%s_%s/raw_scores.json' % (train_dataset, train_dataset, test_dataset))
     # Else we use early fusion
     else:
-        train_data_text = load_vector_data('../model_outputs/WIED-TXT_%s/train/raw_vectors.npy' % train_dataset)
-        train_data_image = load_vector_data('../model_outputs/WIED-IMG_%s/train/raw_vectors.npy' % train_dataset)
+        train_data_text = load_vector_data('../resources/model_outputs/WIED-TXT_%s/train/raw_vectors.npy' % train_dataset)
+        train_data_image = load_vector_data('../resources/model_outputs/WIED-IMG_%s/train/raw_vectors.npy' % train_dataset)
 
-        test_data_text = load_vector_data('../model_outputs/WIED-TXT_%s/%s_%s/raw_vectors.npy' % (train_dataset, train_dataset, test_dataset))
-        test_data_image = load_vector_data('../model_outputs/WIED-IMG_%s/%s_%s/raw_vectors.npy' % (train_dataset, train_dataset, test_dataset))
+        test_data_text = load_vector_data('../resources/model_outputs/WIED-TXT_%s/%s_%s/raw_vectors.npy' % (train_dataset, train_dataset, test_dataset))
+        test_data_image = load_vector_data('../resources/model_outputs/WIED-IMG_%s/%s_%s/raw_vectors.npy' % (train_dataset, train_dataset, test_dataset))
 
     return {'train_gold_standard': train_gold_standard,
             'test_gold_standard': test_gold_standard,
@@ -97,35 +97,13 @@ def load_data_for_experiment_1(train_dataset: str, test_dataset: str,
     assert modality in ['WIED-TXT', 'WIED-IMG', 'GUHA-TXT'],\
         "Please select a valid modality"
 
-    train_dataframe = load_text_dataframe(os.path.join('../dataframes', train_dataset,
+    train_dataframe = load_text_dataframe(os.path.join('../resources/dataframes', train_dataset,
                                                        'train.csv'))
-    test_dataframe = load_text_dataframe(os.path.join('../dataframes', test_dataset,
+    test_dataframe = load_text_dataframe(os.path.join('../resources/dataframes', test_dataset,
                                                       'test.csv'))
-    pretrained_model = os.path.join('../trained_models',
+    pretrained_model = os.path.join('../resources/trained_models',
                                     '%s_%s' % (modality, train_dataset))
 
     return {'train_dataframe': train_dataframe, 'test_dataframe': test_dataframe,
             'pretrained_model_path': pretrained_model}
 
-
-def save_model_predictions(gold_standard_dict: dict, predictions_dict: dict,
-                           output_folder: str,
-                           output_vectors=None,
-                           probabilities:dict = None):
-
-    if not os.path.exists(output_folder):
-        # Create a new directory because it does not exist
-        os.makedirs(output_folder)
-
-    np.save(os.path.join(output_folder, 'raw_vecs.npy'), output_vectors)
-
-    with open(os.path.join(output_folder, 'predictions.json'), 'w') as file:
-        json.dump(predictions_dict, file)
-
-    with open(os.path.join(output_folder, 'gold_standard.json'), 'w') as file:
-        json.dump(gold_standard_dict, file)
-
-    with open(os.path.join(output_folder, 'raw_scores.json'), 'w') as file:
-        json.dump(probabilities, file)
-
-    return None

@@ -9,6 +9,22 @@ from dataloading import *
 from metricutils import *
 
 
+def get_existing_predictions(train_corpus: str, test_corpus: str, modality: str):
+    assert train_corpus in ['C1', 'C2', 'TOBACCO'],\
+        "Please select a valid train dataset string"
+    assert test_corpus in ['C1', 'C2', 'TOBACCO'],\
+        "Please select a valid test ataset string"
+    assert modality in ['WIED-TXT', 'WIED-IMG', 'GUHA-TXT'],\
+        "Please select a valid modality"
+
+    predictions = read_json('../model_outputs/%s_%s/%s_%s/predictions.json' % (modality,train_corpus, train_corpus, test_corpus))
+
+    gold_standard = read_json('../gold_standard/%s_test/gold_standard.json'% test_corpus)
+
+    return {'predictions': predictions, 'gold_standard': gold_standard}
+
+
+
 def prepare_training_data_experiment_3(image_dict, text_dict, gold_standard_dict):
     labels = []
     training_vectors = []

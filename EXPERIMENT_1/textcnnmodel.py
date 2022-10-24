@@ -3,10 +3,6 @@ In this script the code for the Text CNN model from Wiedemann et al is
 given, with the code being nearly identical to the original model,
 with the exception of the word vectors, as we are now loading vectors for the
 Dutch Language.
-
-This script can be used to run all experiments from EXPERIMENT_1, as well
-as the experiments in EXPERIMENT_2 by using a different train set and test set
-as input arguments.
 """
 
 import re
@@ -14,7 +10,7 @@ import math
 import argparse
 from tqdm import tqdm
 from typing import List
-# Here we define the function so we can load the train and teeset dataframes
+# Here we define the function so we can load the train and testset dataframes
 
 
 from gensim.models.fasttext import load_facebook_model
@@ -25,11 +21,11 @@ from tensorflow.keras.models import Model, load_model
 
 # Local imports
 from metricutils import *
-from utils import load_data_for_experiment_1
+from utils import *
 
 # Due to Tensorflow version constraints / incompatibilities with Fasttext
 # We use gensim to load the word vectors as a workaround.
-ft = load_facebook_model("../fasttext_vectors/cc.nl.300.bin")
+ft = load_facebook_model("../resources/fasttext_vectors/cc.nl.300.bin")
 print('---Fasttext Vectors has been loaded---')
 
 
@@ -241,12 +237,26 @@ def main(arguments):
     feature_extractor = Model(inputs=text_model.model.input,
                               outputs=intermediate_layer)
 
-    prediction_dict, raw_dict, vecs = text_model.predict(test_dataframe,
-                                                         batch_size=arguments.batch_size,
-                                                         feature_extractor=feature_extractor)
+    if arguments.use_existing_predictions:
+        prediction_dict = get_existing_predictions(arguments.train_dataset,
+                                                   arguments.test_dataset,
+                                                   'WIED-TXT')['predictions']
+    else:
+        prediction_dict, output_vectors, _ = text_model.predict(test_dataframe,
+                                                             batch_size=arguments.batch_size,
+                                                             feature_extractor=feature_extractor)
 
-    # TODO: I still have to save the data from the experiments using my
-    # TODO: New functions
+        np.save('../resources/model_outputs/WIED-TXT_%s/%s_%s' % (arguments.train_dataset,
+                                                                  arguments.train_dataset,
+                                                                  arguments.test_dataset), output_vectors)
+
+
+        with open('../resources/model_outputs/WIED-TXT_%s/%s_%s/predictions.json' % (arguments.train_dataset,
+                                                                                     arguments.train_dataset,
+                                                                                     arguments.test_dataset), 'w') as json_file:
+            json.dump(prediction_dict, json_file)
+
+    # Now also save the predictions
 
     # We use the evaluation functionality from the metricutils file.
     evaluation_report(gold_standard_dict, prediction_dict)
@@ -255,11 +265,12 @@ def main(arguments):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--from_scratch', type=bool, default=False)
+    parser.add_argument('--use_existing_predictions', default=False)
     parser.add_argument('--batch_size', type=int, default=256)
     parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--train_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2'])
+                        choices=['C1', 'C2'])
     parser.add_argument('--test_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2_SAME', 'C1C2_DIFF'])
+                        choices=['C1', 'C2'])
     arguments = parser.parse_args()
     main(arguments)

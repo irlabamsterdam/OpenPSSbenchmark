@@ -33,7 +33,7 @@ def get_ground_truth_from_dataframe(dataframe: pd.DataFrame, col: str) -> Dict[s
     """
     out = {}
     for doc_id, content in dataframe.groupby('name'):
-        out[doc_id] = content[col].tolist()
+        out[doc_id] = [int(item) for item in content[col].tolist()]
     return out
 
 

@@ -123,27 +123,41 @@ def main(arguments):
         model.model = load_model(pretrained_model_path)
 
 
-    stream_predictions = {}
-    vector_outputs = {}
+    if not arguments.use_existing_predictions:
+        stream_predictions = {}
+        vector_outputs = {}
 
-    intermediate_layer = model.model.get_layer("dense").output
-    feature_extractor = Model(inputs=model.model.input, outputs=intermediate_layer)
+        intermediate_layer = model.model.get_layer("dense").output
+        feature_extractor = Model(inputs=model.model.input, outputs=intermediate_layer)
 
-    for doc_id, stream in test_dataframe.groupby('name'):
+        for doc_id, stream in test_dataframe.groupby('name'):
 
-        test_data = prepare_test_streams(stream, training_params['test_png_folder'],
-                                         arguments.batch_size)
+            test_data = prepare_test_streams(stream, training_params['test_png_folder'],
+                                             arguments.batch_size)
 
-        out = model.predict(test_data).squeeze()
-        stream_prediction = np.round(out).astype(int).tolist()
-        if isinstance(stream_prediction, int):
-            stream_prediction = [stream_prediction]
-        stream_predictions[doc_id] = stream_prediction
+            out = model.predict(test_data).squeeze()
+            stream_prediction = np.round(out).astype(int).tolist()
+            if isinstance(stream_prediction, int):
+                stream_prediction = [stream_prediction]
+            stream_predictions[doc_id] = stream_prediction
 
-    test_dataframe['label'] = test_dataframe['label'].astype(int)
+        test_dataframe['label'] = test_dataframe['label'].astype(int)
+    else:
+        stream_predictions = get_existing_predictions(arguments.train_dataset,
+                                                   arguments.test_dataset,
+                                                   'WIED-IMG')['predictions']
 
     gold_standard = get_ground_truth_from_dataframe(test_dataframe,
                                                     'label')
+
+    # We also want to be able to run the model and with the pretrained
+    # predictions
+
+    if not arguments.use_existing_predictions:
+        with open('../resources/model_outputs/WIED-TXT_%s/%s_%s/predictions.json' % (arguments.train_dataset,
+                                                                                     arguments.train_dataset,
+                                                                                     arguments.test_dataset), 'w') as json_file:
+            json.dump(stream_predictions, json_file)
 
     evaluation_report(gold_standard, stream_predictions)
 
@@ -151,12 +165,13 @@ def main(arguments):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--from_scratch', type=bool, default=False)
+    parser.add_argument('--use_existing_predictions', default=False)
     parser.add_argument('--learning_rate', type=float, default=0.00001)
     parser.add_argument('--batch_size', type=int, default=256)
     parser.add_argument('--num_epochs', type=int, default=20)
     parser.add_argument('--train_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2'])
+                        choices=['C1', 'C2'])
     parser.add_argument('--test_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2_SAME', 'C1C2_DIFF'])
+                        choices=['C1', 'C2'])
     arguments = parser.parse_args()
     main(arguments)

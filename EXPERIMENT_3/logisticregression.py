@@ -10,7 +10,7 @@ def predict(trained_model, image_dict, text_dict):
         image_vec = image_dict[key]
         text_vec = text_dict[key]
         combined_vec = np.vstack([image_vec, text_vec]).T
-        predictions[key] = trained_model.predict(combined_vec)
+        predictions[key] = trained_model.predict(combined_vec).tolist()
 
     return predictions
 
@@ -41,15 +41,18 @@ def main(arguments):
     # Now we can make a prediction
     print("Now we perform the prediction")
     logistic_predictions = predict(logistic_model, test_data_image, test_data_text)
+    with open('../resources/experiment3_outputs/LOGISTICREGRESSION/%s_%s/predictions.json' % (arguments.train_dataset,
+                                                                                 arguments.test_dataset), 'w') as json_file:
+        json.dump(logistic_predictions, json_file)
     evaluation_report(test_labels, logistic_predictions)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2'])
+                        choices=['C1', 'C2'])
     parser.add_argument('--test_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2_SAME', 'C1C2_DIFF'])
+                        choices=['C1', 'C2'])
 
     arguments = parser.parse_args()
     main(arguments)

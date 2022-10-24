@@ -106,13 +106,14 @@ def main(arguments):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument('--from_scratch', type=bool, default=False)
+    parser.add_argument('--use_existing_predictions', default=False)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--num_epochs', type=int, default=5)
     parser.add_argument('--learning_rate', type=float, default=2e-5)
     parser.add_argument('--train_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2'])
+                        choices=['C1', 'C2'])
     parser.add_argument('--test_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2_SAME', 'C1C2_DIFF'])
+                        choices=['C1', 'C2'])
     args = parser.parse_args()
 
     main(args)

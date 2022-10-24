@@ -92,15 +92,19 @@ def main(arguments):
             combined_test_vecs).round().squeeze()
         all_predictions[stream] = outputs.tolist()
 
+    with open('../resources/experiment3_outputs/EARLY/%s_%s/predictions.json' % (arguments.train_dataset,
+                                                                                 arguments.test_dataset), 'w') as json_file:
+        json.dump(all_predictions, json_file)
+
     evaluation_report(test_labels, all_predictions)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2'])
+                        choices=['C1', 'C2'])
     parser.add_argument('--test_dataset', type=str, required=True,
-                        choices=['C1', 'C2', 'TOBACCO', 'C1C2_SAME', 'C1C2_DIFF'])
+                        choices=['C1', 'C2'])
     parser.add_argument('--num_epochs', type=int, default=25)
     parser.add_argument('--learning_rate', type=float, default=0.0001)
     parser.add_argument('--batch_size', type=int, default=512)
