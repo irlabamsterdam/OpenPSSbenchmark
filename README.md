@@ -25,3 +25,8 @@ The scripts present in the EXPERIMENT_1 folder are all structured in a similar m
 
 
 Although all of the models will produce the ``predictions.json`` file required to evaluate the model, this can take a significant amount of time for some of the models, especially the GUHA-TXT and WIED-IMG models. For this reason, we have also provided the predictions of the output models in the ``model_outputs`` folder. You can also follow the scripts from EXPERIMENT_1 and run the predictions manually.
+
+## Experiment 2 Instructions
+Experiment 2 is an extension of experiment 1 where we use the results we got from experimen 1 and experiment with test data from a different source. To run this experiment 'from scratch' you can run all the models in experiment 1 for both C1 and C2 with prediction saving enabled, and then run the script `experiment2.py` in the experiment 2 folder to get all the results.
+
+## Experiment 3 Instructions
