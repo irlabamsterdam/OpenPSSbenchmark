@@ -4,7 +4,7 @@
 We recommend using Anaconda to install all the dependencies required for running the code in this package. The easiest way of doing this is py using the requirements.txt / requirements.yaml files provided in the repository. Assuming you hanve Anaconda installed, you can a fresh environment with the required packages using the following command.
 
 ``
-conda create -n ENV_NAME 
+conda create -n ENV_NAME --file requirements.txt
 ``
 
 This repository contais the code in the links the resources need to run the code used in this paper. The repository is
