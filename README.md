@@ -33,3 +33,5 @@ Although all of the models will produce the ``predictions.json`` file required t
 Experiment 2 is an extension of experiment 1 where we use the results we got from experiment 1 and experiment with test data from a different source. To run this experiment 'from scratch' you can run all the models in experiment 1 for both C1 and C2 with prediction saving enabled, and then run the script `experiment2.py` in the experiment 2 folder to get all the results.
 
 ## Experiment 3 Instructions
+
+Experiment 3 only uses the vectors extracted from the experiment 1 models and when using these, the fusion architectures are quite small and can easily be trained from scratch, and thus we also do not provide the predictions for these models in files. Please refer to the `experiment3.sh` script to see how to run the fusion architectures.
