@@ -1,7 +1,4 @@
-"""
-In this file we will recreate the model that Pepijn used for the image
-classification part of the thesis.
-"""
+
 
 import os
 import argparse
