@@ -1,4 +1,7 @@
-# ECIR-PSS-ReproducibilityResources
+# OpenPSS BenchMark Code and Datasets.
+
+This repository contains the code and experiments for the OpenPSS benchmark, currently under review at the IJDAR journal.
+
 
 ## Installation
 We recommend using Anaconda to install all the dependencies required for running the code in this package. The easiest way of doing this is by using the requirements.txt file provided in the repository. Assuming you hanve Anaconda installed, you can a fresh environment with the required packages using the following command.
@@ -17,7 +20,10 @@ divided 3 main parts, corresponding to the three research questions in the paper
 4. EXPERIMENT_3
 
 ## Getting the resources
-Because of the size of the dataset and the number of trained models, these are made available Zenodo and can be downloaded with the following link: https://zenodo.org/record/7245270#.Y1apvC8RpQI . Once downloaded, move the folder into this GitHub repo's folder and unzip it.
+Both the trained neural models and the two datasets in the research are made publicly available through Zenodo, via the following link: 
+
+This data repository contains the following components:
+
 
 ## Experiment 1 Instructions
 The scripts present in the EXPERIMENT_1 folder are all structured in a similar manner, and can be run using the same command line arguments. Below are some small examples on how to run these models from EXPERIMENT_1. By default, all of the scripts in this research use the pretrained models on the C1 and C2 datasets, however, by using the ``from_scratch`` parameter, the models can be re-trained. However be aware that this can take a very long time, it took as about 2 days on a GPU to train the WIED-IMG model on the C1 dataset.
