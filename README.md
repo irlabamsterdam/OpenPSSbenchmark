@@ -1,6 +1,6 @@
 # OpenPSS BenchMark Code and Datasets.
 
-This repository contains the code and experiments for the OpenPSS benchmark, currently under review at the IJDAR journal.
+This repository contains the code and experiments for the OpenPSS benchmark.
 
 
 ## Installation
