@@ -1,6 +1,6 @@
 # OpenPSS BenchMark Code and Datasets.
 
-This repository contains the code and experiments for the OpenPSS benchmark.
+This repository contains the code and experiments for the OpenPSS benchmark that accompany the "WOOIR: An Open Page Stream Segmentation Benchmark" paper.
 
 
 ## Installation
