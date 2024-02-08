@@ -1,4 +1,4 @@
-# OpenPSS BenchMark Code and Datasets.
+# OpenPSS BenchMark Code and Datasets
 
 This repository contains the code and experiments for the OpenPSS benchmark that accompany the "WOOIR: An Open Page Stream Segmentation Benchmark" paper.
 
@@ -11,9 +11,7 @@ conda create -n ENV_NAME --file requirements.txt
 ``
 
 ## Resources
-``
-experiment2.py --fusion_type FUSION_TYPE 
-``
-
-Where the fusion type is one of 'WIED-MM', 'EARLY', 'AUTOENCODER', 'LOGISTICREGRESSION'
+The datasets and model files and predictions can be downloaded via the below link.
+https://surfdrive.surf.nl/files/index.php/s/afhAe6TuvC4eqir
+You can download the folder and put it in the main file of the repository so that the notebooks and scripts can work with it appropriately.
 
